@@ -53,15 +53,15 @@ public class IbmmqtestApplication {
 		}
 	}
 
-	@GetMapping("recv")
-	String recv(){
-		try{
-			return jmsTemplate.receiveAndConvert("DEV.QUEUE.1").toString();
-		}catch(JmsException ex){
-			ex.printStackTrace();
-			return "FAIL";
-		}
-	}
+//	@GetMapping("recv")
+//	String recv(){
+//		try{
+//			return jmsTemplate.receiveAndConvert("DEV.QUEUE.1").toString();
+//		}catch(JmsException ex){
+//			ex.printStackTrace();
+//			return "FAIL";
+//		}
+//	}
 
 	@Bean
 	public JmsListenerContainerFactory<?> myFactory(ConnectionFactory connectionFactory,
