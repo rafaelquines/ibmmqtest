@@ -1,6 +1,10 @@
 package com.rafaelquines.mqtest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
@@ -29,23 +33,41 @@ import org.springframework.jms.support.converter.MappingJackson2MessageConverter
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 import javax.jms.ConnectionFactory;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @SpringBootApplication
 @RestController
-@EnableJms
+//@EnableJms
 public class IbmmqtestApplication {
+
+	@Value("${mq.fila}")
+	private String fila;
 
 	@Autowired
 	private JmsTemplate jmsTemplate;
-
+	private static final Logger logger = LoggerFactory.getLogger(IbmmqtestApplication.class);
+	private static final Logger splunkLogger = LoggerFactory.getLogger("Splunk");
 	public static void main(String[] args) {
+//		String test = "abcdefghijklmnopqrstuvwxyz";
+//		System.out.println(test.substring(0, 10));//a-j
+//		System.out.println(test.substring(10, 20));//k-t
+//		String dateStr = "2004-05-29-04.46.23.671700";
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss.SSSSSS");
+//		LocalDateTime date = LocalDateTime.parse(dateStr, formatter);
+//		System.out.println("Date: " + date);
+//		System.out.println("Fraction: " + date.getYear());
+		//logger.info("teste 123");
 		SpringApplication.run(IbmmqtestApplication.class, args);
 	}
 
 	@GetMapping("send")
 	String send(){
 		try{
-			jmsTemplate.convertAndSend("DEV.QUEUE.1", "Hello World!");
+			logger.info("sending message");
+			MDC.put("correlationId", CorrelationIdGenerator.generate());
+			splunkLogger.info("Msg enviada");
+			jmsTemplate.convertAndSend(this.fila, "Msg " + LocalDateTime.now());
 			return "OK";
 		}catch(JmsException ex){
 			ex.printStackTrace();
@@ -63,22 +85,22 @@ public class IbmmqtestApplication {
 //		}
 //	}
 
-	@Bean
-	public JmsListenerContainerFactory<?> myFactory(ConnectionFactory connectionFactory,
-													DefaultJmsListenerContainerFactoryConfigurer configurer) {
-		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-		// This provides all boot's default to this factory, including the message converter
-		configurer.configure(factory, connectionFactory);
-		// You could still override some of Boot's default if necessary.
-		return factory;
-	}
+//	@Bean
+//	public JmsListenerContainerFactory<?> myFactory(ConnectionFactory connectionFactory,
+//													DefaultJmsListenerContainerFactoryConfigurer configurer) {
+//		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+//		// This provides all boot's default to this factory, including the message converter
+//		configurer.configure(factory, connectionFactory);
+//		// You could still override some of Boot's default if necessary.
+//		return factory;
+//	}
 
-	@Bean // Serialize message content to json using TextMessage
-	public MessageConverter jacksonJmsMessageConverter() {
-		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-		converter.setTargetType(MessageType.TEXT);
-		converter.setTypeIdPropertyName("_type");
-		return converter;
-	}
+//	@Bean // Serialize message content to json using TextMessage
+//	public MessageConverter jacksonJmsMessageConverter() {
+//		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+//		converter.setTargetType(MessageType.TEXT);
+//		converter.setTypeIdPropertyName("_type");
+//		return converter;
+//	}
 
 }

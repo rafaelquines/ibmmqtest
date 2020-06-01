@@ -1,0 +1,3 @@
+{ "app": "ACL_INVESTIDOR_ONLINE", "arquivo": "IbmmqtestApplication.java:65", "correlationID": "adbc5b0cead84ab4ab3812447ae8d7be", "data": "2020-05-20 11:19:57,053", "level": "INFO", "evento": "Msg enviada", "excecao": "" }
+{ "app": "ACL_INVESTIDOR_ONLINE", "arquivo": "IbmmqtestApplication.java:65", "correlationID": "85af72c877a6441c9065c0100a312941", "data": "2020-05-20 11:22:51,485", "level": "INFO", "evento": "Msg enviada", "excecao": "" }
+{ "app": "ACL_INVESTIDOR_ONLINE", "arquivo": "IbmmqtestApplication.java:69", "correlationID": "4f23e5012cda40fab6b5ccfaa2ce75b2", "data": "2020-05-20 11:25:01,579", "level": "INFO", "evento": "Msg enviada", "excecao": "" }
