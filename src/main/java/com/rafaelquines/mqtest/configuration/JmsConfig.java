@@ -1,7 +1,9 @@
-package com.rafaelquines.mqtest;
+package com.rafaelquines.mqtest.configuration;
 
 import com.ibm.mq.jms.MQConnectionFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
+import com.rafaelquines.mqtest.exceptions.JmsExceptionHandler;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

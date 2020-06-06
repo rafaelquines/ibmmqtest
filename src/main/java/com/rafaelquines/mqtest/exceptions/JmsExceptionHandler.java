@@ -1,4 +1,4 @@
-package com.rafaelquines.mqtest;
+package com.rafaelquines.mqtest.exceptions;
 
 import org.springframework.util.ErrorHandler;
 

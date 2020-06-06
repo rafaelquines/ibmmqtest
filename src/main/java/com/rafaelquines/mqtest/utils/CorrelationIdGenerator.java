@@ -1,4 +1,4 @@
-package com.rafaelquines.mqtest;
+package com.rafaelquines.mqtest.utils;
 
 import java.util.UUID;
 

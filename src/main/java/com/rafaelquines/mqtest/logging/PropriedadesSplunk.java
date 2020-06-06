@@ -1,5 +1,8 @@
-package com.rafaelquines.mqtest;
+package com.rafaelquines.mqtest.logging;
 
+import lombok.Data;
+
+@Data
 public class PropriedadesSplunk {
     private String filaOrigem;
     private String codigoInvestidorRZ;

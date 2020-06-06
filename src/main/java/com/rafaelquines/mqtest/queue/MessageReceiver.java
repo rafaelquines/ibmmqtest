@@ -1,18 +1,13 @@
-package com.rafaelquines.mqtest;
+package com.rafaelquines.mqtest.queue;
 
-import com.ibm.mq.jms.MQConnectionFactory;
+import javax.jms.TextMessage;
+
+import com.rafaelquines.mqtest.utils.CorrelationIdGenerator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jms.annotation.JmsListener;
-import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
-import org.slf4j.MDC;
-import javax.jms.JMSException;
-import javax.jms.TextMessage;
-import java.util.UUID;
 
 @Component
 public class MessageReceiver {
